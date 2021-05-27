@@ -1,4 +1,4 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes – Everything Kube</title><link>https://example.com/</link><description>The Kubernetes project blog</description><generator>Hugo -- gohugo.io</generator><image><url>https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png</url><title>Kubernetes.io</title><link>https://example.com/</link></image><atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Windows workers with MicroK8s</title><link>https://example.com/blog/2021/04/27/windows-workers/</link><pubDate>Tue, 27 Apr 2021 12:37:04 +0100</pubDate><guid>https://example.com/blog/2021/04/27/windows-workers/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes – Everything Kube</title><link>https://example.com/</link><description>The Kubernetes project blog</description><generator>Hugo -- gohugo.io</generator><image><url>https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png</url><title>Kubernetes.io</title><link>https://example.com/</link></image><atom:link href="https://example.com/feed.xml" rel="self" type="application/rss+xml"/><item><title>Blog: some other thing MicroK8s</title><link>https://example.com/blog/2021/04/27/microk8s/</link><pubDate>Tue, 27 Apr 2021 12:37:04 +0100</pubDate><guid>https://example.com/blog/2021/04/27/microk8s/</guid><description>
 &lt;h1 id="windows-containers-on-kubernetes-with-microk8s">Windows containers on Kubernetes with MicroK8s&lt;/h1>
 &lt;p>Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success
 of the container-based development model, it provides the tools to operate containers reliably at
@@ -77,115 +77,83 @@ full explanation of this workflow in the upstream
 &lt;p>More from MicroK8s&lt;/p>
 &lt;p>There is plenty more you can do with a MicroK8s cluster - be sure to check out the
 documentation for &lt;a href="https://microk8s.io/docs/addons">MicroK8s add-ons&lt;/a> so you can
-enable the dashboard, ingress controllers, Kubeflow and more.&lt;/p></description></item><item><title>Blog: Graceful Node Shutdown Goes Beta</title><link>https://example.com/blog/2021/04/21/graceful-node-shutdown-beta/</link><pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate><guid>https://example.com/blog/2021/04/21/graceful-node-shutdown-beta/</guid><description>
-&lt;p>&lt;strong>Authors:&lt;/strong> David Porter (Google), Mrunal Patel (Red Hat), and Tim Bannister (The Scale Factory)&lt;/p>
-&lt;p>Graceful node shutdown, beta in 1.21, enables kubelet to gracefully evict pods during a node shutdown.&lt;/p>
-&lt;p>Kubernetes is a distributed system and as such we need to be prepared for inevitable failures — nodes will fail, containers might crash or be restarted, and - ideally - your workloads will be able to withstand these catastrophic events.&lt;/p>
-&lt;p>One of the common classes of issues are workload failures on node shutdown or restart. The best practice prior to bringing your node down is to &lt;a href="https://example.com/docs/tasks/administer-cluster/safely-drain-node/">safely drain and cordon your node&lt;/a>. This will ensure that all pods running on this node can safely be evicted. An eviction will ensure your pods can follow the expected &lt;a href="https://example.com/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination">pod termination lifecycle&lt;/a> meaning receiving a SIGTERM in your container and/or running &lt;code>preStopHooks&lt;/code>.&lt;/p>
-&lt;p>Prior to Kubernetes 1.20 (when graceful node shutdown was introduced as an alpha feature), safe node draining was not easy: it required users to manually take action and drain the node beforehand. If someone or something shut down your node without draining it first, most likely your pods would not be safely evicted from your node and shutdown abruptly. Other services talking to those pods might see errors due to the pods exiting abruptly. Some examples of this situation may be caused by a reboot due to security patches or preemption of short lived cloud compute instances.&lt;/p>
-&lt;p>Kubernetes 1.21 brings graceful node shutdown to beta. Graceful node shutdown gives you more control over some of those unexpected shutdown situations. With graceful node shutdown, the kubelet is aware of underlying system shutdown events and can propagate these events to pods, ensuring containers can shut down as gracefully as possible. This gives the containers a chance to checkpoint their state or release back any resources they are holding.&lt;/p>
-&lt;p>Note, that for the best availability, even with graceful node shutdown, you should still design your deployments to be resilient to node failures.&lt;/p>
-&lt;h2 id="how-does-it-work">How does it work?&lt;/h2>
-&lt;p>On Linux, your system can shut down in many different situations. For example:&lt;/p>
+enable the dashboard, ingress controllers, Kubeflow and more.&lt;/p></description></item><item><title>Blog: Windows workers with MicroK8s</title><link>https://example.com/blog/2021/04/27/windows-workers/</link><pubDate>Tue, 27 Apr 2021 12:37:04 +0100</pubDate><guid>https://example.com/blog/2021/04/27/windows-workers/</guid><description>
+&lt;h1 id="windows-containers-on-kubernetes-with-microk8s">Windows containers on Kubernetes with MicroK8s&lt;/h1>
+&lt;p>Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success
+of the container-based development model, it provides the tools to operate containers reliably at
+scale. The container-based development methodology is popular outside just the realm of open source
+and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management,
+faster development cycles, portability and consistent operation - apply to applications targeting the
+Windows OS also.&lt;/p>
+&lt;h3 id="kubernetes-on-windows">Kubernetes on Windows&lt;/h3>
+&lt;p>There are no plans to develop code for a Windows only Kubernetes cluster. The control plane and
+master components (kube-apiserver, kube-scheduler, kube-controller) will, for the foreseeable future,
+only run on a Linux OS. However, it is possible to run the services required for a Kubernetes node on Windows.&lt;/p>
+&lt;p>This means that a worker node can be used to run Windows workloads, while the control plane runs
+on Linux - a hybrid cluster. Production-level support for running a Windows node was introduced
+with &lt;a href="https://kubernetes.io/blog/2019/03/25/kubernetes-1-14-release-announcement/">version 1.14 of Kubernetes back in March 2019&lt;/a>, so in terms of deployment of Windows containers, operators can expect exactly the same features for Windows workloads as they do for Linux ones.&lt;/p>
+&lt;p>The Kubernetes components that are required for a worker node are:&lt;/p>
 &lt;ul>
-&lt;li>A user or script running &lt;code>shutdown -h now&lt;/code> or &lt;code>systemctl poweroff&lt;/code> or &lt;code>systemctl reboot&lt;/code>.&lt;/li>
-&lt;li>Physically pressing a power button on the machine.&lt;/li>
-&lt;li>Stopping a VM instance on a cloud provider, e.g. &lt;code>gcloud compute instances stop&lt;/code> on GCP.&lt;/li>
-&lt;li>A Preemptible VM or Spot Instance that your cloud provider can terminate unexpectedly, but with a brief warning.&lt;/li>
-&lt;/ul>
-&lt;p>Many of these situations can be unexpected and there is no guarantee that a cluster administrator drained the node prior to these events. With the graceful node shutdown feature, kubelet uses a systemd mechanism called &lt;a href="https://www.freedesktop.org/wiki/Software/systemd/inhibit">&amp;quot;Inhibitor Locks&amp;quot;&lt;/a> to allow draining in most cases. Using Inhibitor Locks, kubelet instructs systemd to postpone system shutdown for a specified duration, giving a chance for the node to drain and evict pods on the system.&lt;/p>
-&lt;p>Kubelet makes use of this mechanism to ensure your pods will be terminated cleanly. When the kubelet starts, it acquires a systemd delay-type inhibitor lock. When the system is about to shut down, the kubelet can delay that shutdown for a configurable, short duration utilizing the delay-type inhibitor lock it acquired earlier. This gives your pods extra time to terminate. As a result, even during unexpected shutdowns, your application will receive a SIGTERM, &lt;a href="https://example.com/docs/concepts/containers/container-lifecycle-hooks/#container-hooks">preStop hooks&lt;/a> will execute, and kubelet will properly update &lt;code>Ready&lt;/code> node condition and respective pod statuses to the api-server.&lt;/p>
-&lt;p>For example, on a node with graceful node shutdown enabled, you can see that the inhibitor lock is taken by the kubelet:&lt;/p>
-&lt;pre>&lt;code>kubelet-node ~ # systemd-inhibit --list
-Who: kubelet (UID 0/root, PID 1515/kubelet)
-What: shutdown
-Why: Kubelet needs time to handle node shutdown
-Mode: delay
-1 inhibitors listed.
-&lt;/code>&lt;/pre>&lt;p>One important consideration we took when designing this feature is that not all pods are created equal. For example, some of the pods running on a node such as a logging related daemonset should stay running as long as possible to capture important logs during the shutdown itself. As a result, pods are split into two categories: &amp;quot;regular&amp;quot; and &amp;quot;critical&amp;quot;. &lt;a href="https://example.com/docs/tasks/administer-cluster/guaranteed-scheduling-critical-addon-pods/#marking-pod-as-critical">Critical pods&lt;/a> are those that have &lt;code>priorityClassName&lt;/code> set to &lt;code>system-cluster-critical&lt;/code> or &lt;code>system-node-critical&lt;/code>; all other pods are considered regular.&lt;/p>
-&lt;p>In our example, the logging DaemonSet would run as a critical pod. During the graceful node shutdown, regular pods are terminated first, followed by critical pods. As an example, this would allow a critical pod associated with a logging daemonset to continue functioning, and collecting logs during the termination of regular pods.&lt;/p>
-&lt;p>We will evaluate during the beta phase if we need more flexibility for different pod priority classes and add support if needed, please let us know if you have some scenarios in mind.&lt;/p>
-&lt;h2 id="how-do-i-use-it">How do I use it?&lt;/h2>
-&lt;p>Graceful node shutdown is controlled with the &lt;code>GracefulNodeShutdown&lt;/code> &lt;a href="https://example.com/docs/reference/command-line-tools-reference/feature-gates">feature gate&lt;/a> and is enabled by default in Kubernetes 1.21.&lt;/p>
-&lt;p>You can configure the graceful node shutdown behavior using two kubelet configuration options: &lt;code>ShutdownGracePeriod&lt;/code> and &lt;code>ShutdownGracePeriodCriticalPods&lt;/code>. To configure these options, you edit the kubelet configuration file that is passed to kubelet via the &lt;code>--config&lt;/code> flag; for more details, refer to &lt;a href="https://example.com/docs/tasks/administer-cluster/kubelet-config-file/">Set kubelet parameters via a configuration file&lt;/a>.&lt;/p>
-&lt;p>During a shutdown, kubelet terminates pods in two phases. You can configure how long each of these phases lasts.&lt;/p>
-&lt;ol>
-&lt;li>Terminate regular pods running on the node.&lt;/li>
-&lt;li>Terminate critical pods running on the node.&lt;/li>
-&lt;/ol>
-&lt;p>The settings that control the duration of shutdown are:&lt;/p>
-&lt;ul>
-&lt;li>&lt;code>ShutdownGracePeriod&lt;/code>
-&lt;ul>
-&lt;li>Specifies the total duration that the node should delay the shutdown by. This is the total grace period for pod termination for both regular and critical pods.&lt;/li>
-&lt;/ul>
+&lt;li>
+&lt;p>kubelet: this is the Kubernetes agent which manages and reports on the running containers in a pod.&lt;/p>
 &lt;/li>
-&lt;li>&lt;code>ShutdownGracePeriodCriticalPods&lt;/code>
-&lt;ul>
-&lt;li>Specifies the duration used to terminate critical pods during a node shutdown. This should be less than &lt;code>ShutdownGracePeriod&lt;/code>.&lt;/li>
-&lt;/ul>
+&lt;li>
+&lt;p>kube-proxy: a network proxy component which maintains the network rules and allows pods to
+communicate within or externally to the rest of the cluster&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>a container runtime: the executable responsible for running individual containers. Actually, several
+different container runtimes are now supported by Kubernetes - Docker, CRI-O, containerd (and through
+that, many others such as the Windows-specific runhcs), as well as any other which support the
+Kubernetes &lt;a href="https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md">container runtime interface (CRI) &lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ul>
-&lt;p>For example, if &lt;code>ShutdownGracePeriod=30s&lt;/code>, and &lt;code>ShutdownGracePeriodCriticalPods=10s&lt;/code>, kubelet will delay the node shutdown by 30 seconds. During this time, the first 20 seconds (30-10) would be reserved for gracefully terminating normal pods, and the last 10 seconds would be reserved for terminating critical pods.&lt;/p>
-&lt;p>Note that by default, both configuration options described above, &lt;code>ShutdownGracePeriod&lt;/code> and &lt;code>ShutdownGracePeriodCriticalPods&lt;/code> are set to zero, so you will need to configure them as appropriate for your environment to activate graceful node shutdown functionality.&lt;/p>
-&lt;h2 id="how-can-i-learn-more">How can I learn more?&lt;/h2>
+&lt;p>&lt;img src="image_0.png" alt="image alt text">&lt;/p>
+&lt;p>Kubernetes cluster components (image CC BY 4.0 The Kubernetes Authors).&lt;/p>
+&lt;p>It is of course possible to manually install these components on a Windows machine and construct a node,
+then integrate it into an existing cluster. There are easier ways to achieve this though.&lt;/p>
+&lt;h3 id="microk8s-and-calico">MicroK8s and Calico&lt;/h3>
+&lt;p>For the Linux-based part of a hybrid Kubernetes cluster, MicroK8s is a compelling choice.
+MicroK8s is a minimal implementation of Kubernetes which can run on the average laptop, yet has production
+grade features. It's great for offline development, prototyping and testing, and if required you can also
+get professional support for it through &lt;a href="https://ubuntu.com/support">Ubuntu Advantage&lt;/a>.&lt;/p>
+&lt;p>The most compelling feature of MicroK8s for this use case is that you can run it sort-of-almost-natively
+on Windows 10! For development work and even production use-cases, this is hugely useful - your hybrid
+cluster can reside on one physical Windows machine. MicroK8s on Windows works by making use of
+&lt;a href="https://multipass.run/">Multipass&lt;/a> - a neat way of running a virtual Ubuntu machine on Windows.
+The MicroK8s installer for Windows doesn't require any knowledge of multi-pass or even virtual machines
+though, it sets everything up with just a few options from the installer.&lt;/p>
+&lt;p>To fetch the current installer and see the (simple!) install instructions for MicroK8s on Windows, check out the &lt;a href="https://microk8s.io/">MicroK8s website&lt;/a>.&lt;/p>
+&lt;p>Whether using MicroK8 on Windows or a separate Linux machine, the next thing to consider is networking. Calico has been the default CNI(Container Network Interface) for MicroK8s since the 1.19 release. The CNI handles a number of networking requirements:&lt;/p>
 &lt;ul>
-&lt;li>Read the &lt;a href="https://example.com/docs/concepts/architecture/nodes/#graceful-node-shutdown">documentation&lt;/a>&lt;/li>
-&lt;li>Read the enhancement proposal, &lt;a href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-node/2000-graceful-node-shutdown">KEP 2000&lt;/a>&lt;/li>
-&lt;li>View the &lt;a href="https://github.com/kubernetes/kubernetes/tree/release-1.21/pkg/kubelet/nodeshutdown">code&lt;/a>&lt;/li>
+&lt;li>
+&lt;p>Container-to-container communications&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Pod-to-Pod communications&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Pod-to-Service communications&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>External-to-Service communications&lt;/p>
+&lt;/li>
 &lt;/ul>
-&lt;h2 id="how-do-i-get-involved">How do I get involved?&lt;/h2>
-&lt;p>Your feedback is always welcome! SIG Node meets regularly and can be reached via &lt;a href="https://slack.k8s.io">Slack&lt;/a> (channel &lt;code>#sig-node&lt;/code>), or the SIG's &lt;a href="https://github.com/kubernetes/community/tree/master/sig-node#contact">mailing list&lt;/a>&lt;/p></description></item><item><title>Blog: The Evolution of Kubernetes Dashboard</title><link>https://example.com/blog/2021/03/09/the-evolution-of-kubernetes-dashboard/</link><pubDate>Tue, 09 Mar 2021 00:00:00 +0000</pubDate><guid>https://example.com/blog/2021/03/09/the-evolution-of-kubernetes-dashboard/</guid><description>
-&lt;p>Authors: Marcin Maciaszczyk, Kubermatic &amp;amp; Sebastian Florek, Kubermatic&lt;/p>
-&lt;p>In October 2020, the Kubernetes Dashboard officially turned five. As main project maintainers, we can barely believe that so much time has passed since our very first commits to the project. However, looking back with a bit of nostalgia, we realize that quite a lot has happened since then. Now it’s due time to celebrate “our baby” with a short recap.&lt;/p>
-&lt;h2 id="how-it-all-began">How It All Began&lt;/h2>
-&lt;p>The initial idea behind the Kubernetes Dashboard project was to provide a web interface for Kubernetes. We wanted to reflect the kubectl functionality through an intuitive web UI. The main benefit from using the UI is to be able to quickly see things that do not work as expected (monitoring and troubleshooting). Also, the Kubernetes Dashboard is a great starting point for users that are new to the Kubernetes ecosystem.&lt;/p>
-&lt;p>The very &lt;a href="https://github.com/kubernetes/dashboard/commit/5861187fa807ac1cc2d9b2ac786afeced065076c">first commit&lt;/a> to the Kubernetes Dashboard was made by Filip Grządkowski from Google on 16th October 2015 – just a few months from the initial commit to the Kubernetes repository. Our initial commits go back to November 2015 (&lt;a href="https://github.com/kubernetes/dashboard/commit/09e65b6bb08c49b926253de3621a73da05e400fd">Sebastian committed on 16 November 2015&lt;/a>; &lt;a href="https://github.com/kubernetes/dashboard/commit/1da4b1c25ef040818072c734f71333f9b4733f55">Marcin committed on 23 November 2015&lt;/a>). Since that time, we’ve become regular contributors to the project. For the next two years, we worked closely with the Googlers, eventually becoming main project maintainers ourselves.&lt;/p>
-&lt;figure>
-&lt;img src="https://example.com/blog/2021/03/09/the-evolution-of-kubernetes-dashboard/first-ui.png"
-alt="The First Version of the User Interface"/> &lt;figcaption>
-&lt;p>The First Version of the User Interface&lt;/p>
-&lt;/figcaption>
-&lt;/figure>
-&lt;figure>
-&lt;img src="https://example.com/blog/2021/03/09/the-evolution-of-kubernetes-dashboard/along-the-way-ui.png"
-alt="Prototype of the New User Interface"/> &lt;figcaption>
-&lt;p>Prototype of the New User Interface&lt;/p>
-&lt;/figcaption>
-&lt;/figure>
-&lt;figure>
-&lt;img src="https://example.com/blog/2021/03/09/the-evolution-of-kubernetes-dashboard/current-ui.png"
-alt="The Current User Interface"/> &lt;figcaption>
-&lt;p>The Current User Interface&lt;/p>
-&lt;/figcaption>
-&lt;/figure>
-&lt;p>As you can see, the initial look and feel of the project were completely different from the current one. We have changed the design multiple times. The same has happened with the code itself.&lt;/p>
-&lt;h2 id="growing-up-the-big-migration">Growing Up - The Big Migration&lt;/h2>
-&lt;p>At &lt;a href="https://github.com/kubernetes/dashboard/pull/2727">the beginning of 2018&lt;/a>, we reached a point where AngularJS was getting closer to the end of its life, while the new Angular versions were published quite often. A lot of the libraries and the modules that we were using were following the trend. That forced us to spend a lot of the time rewriting the frontend part of the project to make it work with newer technologies.&lt;/p>
-&lt;p>The migration came with many benefits like being able to refactor a lot of the code, introduce design patterns, reduce code complexity, and benefit from the new modules. However, you can imagine that the scale of the migration was huge. Luckily, there were a number of contributions from the community helping us with the resource support, new Kubernetes version support, i18n, and much more. After many long days and nights, we finally released the &lt;a href="https://github.com/kubernetes/dashboard/releases/tag/v2.0.0-beta1">first beta version&lt;/a> in July 2019, followed by the &lt;a href="https://github.com/kubernetes/dashboard/releases/tag/v2.0.0">2.0 release&lt;/a> in April 2020 — our baby had grown up.&lt;/p>
-&lt;h2 id="where-are-we-standing-in-2021">Where Are We Standing in 2021?&lt;/h2>
-&lt;p>Due to limited resources, unfortunately, we were not able to offer extensive support for many different Kubernetes versions. So, we’ve decided to always try and support the latest Kubernetes version available at the time of the Kubernetes Dashboard release. The latest release, &lt;a href="https://github.com/kubernetes/dashboard/releases/tag/v2.2.0">Dashboard v2.2.0&lt;/a> provides support for Kubernetes v1.20.&lt;/p>
-&lt;p>On top of that, we put in a great deal of effort into &lt;a href="https://github.com/kubernetes/dashboard/issues/5232">improving resource support&lt;/a>. Meanwhile, we do offer support for most of the Kubernetes resources. Also, the Kubernetes Dashboard supports multiple languages: English, German, French, Japanese, Korean, Chinese (Traditional, Simplified, Traditional Hong Kong). Persian and Russian localizations are currently in progress. Moreover, we are working on the support for 3rd party themes and the design of the app in general. As you can see, quite a lot of things are going on.&lt;/p>
-&lt;p>Luckily, we do have regular contributors with domain knowledge who are taking care of the project, updating the Helm charts, translations, Go modules, and more. But as always, there could be many more hands on deck. So if you are thinking about contributing to Kubernetes, keep us in mind ;)&lt;/p>
-&lt;h2 id="what-s-next">What’s Next&lt;/h2>
-&lt;p>The Kubernetes Dashboard has been growing and prospering for more than 5 years now. It provides the community with an intuitive Web UI, thereby decreasing the complexity of Kubernetes and increasing its accessibility to new community members. We are proud of what the project has achieved so far, but this is by far not the end. These are our priorities for the future:&lt;/p>
-&lt;ul>
-&lt;li>Keep providing support for the new Kubernetes versions&lt;/li>
-&lt;li>Keep improving the support for the existing resources&lt;/li>
-&lt;li>Keep working on auth system improvements&lt;/li>
-&lt;li>&lt;a href="https://github.com/kubernetes/dashboard/pull/5449">Rewrite the API to use gRPC and shared informers&lt;/a>: This will allow us to improve the performance of the application but, most importantly, to support live updates coming from the Kubernetes project. It is one of the most requested features from the community.&lt;/li>
-&lt;li>Split the application into two containers, one with the UI and the second with the API running inside.&lt;/li>
-&lt;/ul>
-&lt;h2 id="the-kubernetes-dashboard-in-numbers">The Kubernetes Dashboard in Numbers&lt;/h2>
-&lt;ul>
-&lt;li>Initial commit made on October 16, 2015&lt;/li>
-&lt;li>Over 100 million pulls from Dockerhub since the v2 release&lt;/li>
-&lt;li>8 supported languages and the next 2 in progress&lt;/li>
-&lt;li>Over 3360 closed PRs&lt;/li>
-&lt;li>Over 2260 closed issues&lt;/li>
-&lt;li>100% coverage of the supported core Kubernetes resources&lt;/li>
-&lt;li>Over 9000 stars on GitHub&lt;/li>
-&lt;li>Over 237 000 lines of code&lt;/li>
-&lt;/ul>
-&lt;h2 id="join-us">Join Us&lt;/h2>
-&lt;p>As mentioned earlier, we are currently looking for more people to help us further develop and grow the project. We are open to contributions in multiple areas, i.e., &lt;a href="https://github.com/kubernetes/dashboard/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22">issues with help wanted label&lt;/a>. Please feel free to reach out via GitHub or the #sig-ui channel in the &lt;a href="https://slack.k8s.io/">Kubernetes Slack&lt;/a>.&lt;/p></description></item></channel></rss>
+&lt;p>The popularity of Calico has been building for some time over simpler CNIs, as it supports
+more useful features (e.g. Border Gateway Protocol [#ref]) and is also available in a
+&lt;a href="https://www.tigera.io/tigera-products/calico-enterprise/">supported enterprise version&lt;/a>.&lt;/p>
+&lt;p>Usefully, Calico already bundles the Windows executables for this CNI in an installer script that also fetches the other components required for a Windows node, making installation and setup that much easier. The Calico website has &lt;a href="https://docs.projectcalico.org/getting-started/windows-calico/quickstart">complete instructions for this&lt;/a>. This contains not only links to the installer script but also a detailed rationale on how the setup works. If you are just interested in getting started with adding a Windows worker with MicroK8s there are more concise and specific instructions in the &lt;a href="https://microk8s.io/docs/add-a-windows-worker-node-to-microk8s">MicroK8s documentation&lt;/a>.&lt;/p>
+&lt;h3 id="scheduling-windows-containers-on-hybrid-kubernetes">Scheduling Windows containers on hybrid Kubernetes&lt;/h3>
+&lt;p>The final step of this journey is to actually deploy some Windows containers. With a
+hybrid cluster, you could potentially be running Windows or Linux based containers and
+Kubernetes will need some way of knowing which nodes to deploy them on.&lt;/p>
+&lt;p>A pod specification for a Windows workload should contain a nodeselector field
+identifying that it is to run on Windows. The recommended additional workflow is to use
+the 'taints and tolerations' features of Kubernetes, to explicitly refuse deployments
+on the Windows nodes to any pod which hasn't specifically requested them. There is a
+full explanation of this workflow in the upstream
+&lt;a href="https://kubernetes.io/docs/setup/production-environment/windows/user-guide-windows-containers/#taints-and-tolerations">Kubernetes documentation&lt;/a>.&lt;/p>
+&lt;p>More from MicroK8s&lt;/p>
+&lt;p>There is plenty more you can do with a MicroK8s cluster - be sure to check out the
+documentation for &lt;a href="https://microk8s.io/docs/addons">MicroK8s add-ons&lt;/a> so you can
+enable the dashboard, ingress controllers, Kubeflow and more.&lt;/p></description></item></channel></rss>
