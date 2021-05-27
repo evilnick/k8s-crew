@@ -1,0 +1,10 @@
+<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	<div class = "td-navbar navrbar-expand navbar-nav navbar-dark nav-link fab fa-github"> On Github</div>
+</a>
+<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+	{{ $p := . }}
+	<a class="dropdown-item" href="/releases">Repositories</a>
+	{{ range .Site.Params.repos }}
+	<a class="dropdown-item fab fa-github" href="{{ .url }}{{ $p.RelPermalink }}">{{ .name }}</a>
+	{{ end }}
+</div>
