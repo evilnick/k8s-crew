@@ -1,0 +1,8 @@
+###############################################
+# set server-side redirects in this file      #
+# see https://www.netlify.com/docs/redirects/ #
+# test at https://play.netlify.com/redirects  #
+###############################################
+
+/blog/2020/08/25/kubernetes-release-1.19/     /blog/2020/08/26/kubernetes-release-1.19/     301!
+
