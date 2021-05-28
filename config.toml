@@ -117,8 +117,8 @@ anchor = "smart"
 # id = "UA-00000000-0"
 
 [params]
-copyright = "The Kubernetes Authors"
-copyright_linux =  "Copyright © 2020 The Linux Foundation ®."
+copyright = "Canonical"
+
 # privacy_policy = "https://policies.google.com/privacy"
 
 # First one is picked as the Twitter card image if not set on page.
