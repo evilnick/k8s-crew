@@ -151,10 +151,10 @@ other = "Explore the community"
 other = "Contribute"
 
 [main_copyright_notice]
-other = """The Linux Foundation &reg;. All rights reserved. The Linux Foundation has registered trademarks and uses trademarks. For a list of trademarks of The Linux Foundation, please see our <a href="https://www.linuxfoundation.org/trademark-usage" class="light-text">Trademark Usage page</a>"""
+other = """ Kubernetes<sup>&reg;</sup> is a registered trademark of the Linux Foundation in the United States and other countries."""
 
 [main_documentation_license]
-other = """The Kubernetes Authors | Documentation Distributed under <a href="https://git.k8s.io/website/LICENSE" class="light-text">CC BY 4.0</a>"""
+other = """Canonical Ltd. | Documentation Distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode" class="light-text">CC BY 4.0</a>"""
 
 [main_github_invite]
 other = "Interested in hacking on the core Kubernetes code base?"

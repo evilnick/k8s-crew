@@ -446,16 +446,6 @@ $feature-box-div-margin-bottom: 40px;
   }
 }
 
-// Add logo to CNCF section
-section#cncf {
-  padding-top: 60px;
-  padding-bottom: 140px;
-  background-image: url(/images/cncf-color.svg);
-  background-position: center 100px;
-  background-repeat: no-repeat;
-  background-size: 300px;
-}
-
 // OCEAN NODES
 #oceanNodes {
   padding-top: $ocean-nodes-padding-Y;
@@ -621,20 +611,6 @@ section#cncf {
     &:hover {
       border-color: white;
     }
-  }
-}
-
-// KubeWeekly
-#kubeweekly {
-  background-color: $light-grey;
-  padding-top: 30px;
-  padding-bottom: 80px;
-  background-size: auto;
-  font-size: 24px;
-  // font-weight: bold;
-
-  h5 {
-    font-size: 20px;
   }
 }
 

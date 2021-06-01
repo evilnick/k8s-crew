@@ -7,14 +7,25 @@ sitemap:
 ---
 
 {{< blocks/section id="oceanNodes" >}}
-{{% blocks/feature image="flower" %}}
-Canonical's Kubernetes teams work on a wide variety of projects to deliver 
+{{% blocks/feature image="ck.svg" %}}
+Canonical's Kubernetes teams work on a wide variety of projects to deliver the best Kubernetes experience, 
+wherever you choose to run it.
 {{% /blocks/feature %}}
 
-{{% blocks/feature image="scalable" %}}
+{{% blocks/feature image="MicroK8s-256x256" %}}
 #### MicroK8s
 
-Some inspiring stuff about MicroK8s
+MicroK8s is the smallest, fastest, fully-conformant Kubernetes that tracks upstream releases and makes
+clustering trivial. MicroK8s is great for offline development, prototyping, and testing. Use it on a
+VM as a small, cheap, reliable k8s for CI/CD. It’s also the best production grade Kubernetes for
+appliances. Develop IoT apps for k8s and deploy them to MicroK8s on your Linux boxes.
+
+For more about MicroK8s:
+<ul>
+  <li class= "f-list"> Check out the <a href="https://microk8s.io/docs"> documentation</a></li>
+  <li class= "f-list"> Clone the code from Github </li> 
+  <li class ="f-list"> Join the conversation on the Kubernetes.io forum</li>
+</ul>
 
 {{% /blocks/feature %}}
 
@@ -35,30 +46,7 @@ Deep integration with infrastructure features such as LBaaS, storage, and networ
 
 Blah blah etc. 
 
-
 {{% /blocks/feature %}}
-
-{{< /blocks/section >}}
-
-{{< blocks/section id="video" background-image="kub_video_banner_homepage" >}}
-<div class="light-text">
-<h2>This is a section</h2>
-        <p>xxxxxxxxxxxxxxxxxxxxxxxx</p>
-        <button id="desktopShowVideoButton" onclick="kub.showVideo()">Watch Video</button>
-        <br>
-        <br>
-        <a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/?utm_source=kubernetes.io&utm_medium=nav&utm_campaign=kccncna20" button id="desktopKCButton">Attend KubeCon NA virtually on November 17-20, 2020</a>
-        <br>
-        <br>
-        <br>
-        <br>
-        <a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/?utm_source=kubernetes.io&utm_medium=nav&utm_campaign=kccnceu21" button id="desktopKCButton">Attend KubeCon EU virtually on May 4 – 7, 2021</a>
-</div>
-<div id="videoPlayer">
-    <iframe data-url="https://www.youtube.com/embed/H06qrNmGqyE?autoplay=1" frameborder="0" allowfullscreen></iframe>
-    <button id="closeButton"></button>
-</div>
-{{< /blocks/section >}}
 
 {{< blocks/kubernetes-features >}}
 
