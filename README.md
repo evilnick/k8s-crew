@@ -1,8 +1,17 @@
-# k8screw-hugo
+# k8s-crew
 
 
-Currently deployed at: https://evilnick.github.io/k8screw-hugo
-To add a post, create a new file in posts and add the metadata, e.g:
+This is the temporary blog site. There are things still to be done, but it works and is currently deployed
+using netlify:  <https://vigorous-euler-k8s.netlify.app/>
+
+To add a new post, you currently need to make a new file in 
+
+`content/en/blog/_posts/`
+
+You can probably do this [by clicking this link](https://github.com/evilnick/k8s-crew/new/main/content/en/blog/_posts)
+
+This should include some basic frontmatter:
+
 
 ```
 ---
