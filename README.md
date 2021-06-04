@@ -19,3 +19,12 @@ title: "Hello K8s Crew"
 date: 2021-04-26T11:37:04+01:00
 draft: false
 ---
+
+
+If you want to test deploy yourself, just clone the repo and run:
+
+```
+hugo serve
+```
+
+then go to the link in the output
