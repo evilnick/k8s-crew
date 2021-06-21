@@ -226,7 +226,7 @@ no = 'Sorry to hear that. Please <a href="https://github.com/USERNAME/REPOSITORY
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
 [[params.links.developer]]
 	name = "GitHub"
-	url = "https://github.com/kubernetes/kubernetes"
+	url = "https://github.com/charmed-kubernetes/bundle"
 	icon = "fab fa-github"
   desc = "Development takes place here!"
 
@@ -235,18 +235,6 @@ no = 'Sorry to hear that. Please <a href="https://github.com/USERNAME/REPOSITORY
 	url = "https://slack.k8s.io"
 	icon = "fab fa-slack"
   desc = "Chat with other project developers"
-
-[[params.links.developer]]
-	name = "Contribute"
-	url = "https://git.k8s.io/community/contributors/guide"
-	icon = "fas fa-edit"
-  desc = "Contribute to the Kubernetes website"
-
-[[params.links.developer]]
-	name = "Stack Overflow"
-	url = "https://stackoverflow.com/questions/tagged/kubernetes"
-	icon = "fab fa-stack-overflow"
-  desc = "Practical questions and curated answers"
 
 
 [[params.repos]]
