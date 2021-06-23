@@ -4,6 +4,8 @@
 This is the temporary blog site. There are things still to be done, but it works and is currently deployed
 using netlify:  <https://vigorous-euler-k8s.netlify.app/>
 
+It is also now configured to publish on GitHub Pages, using the generated content in the `gh-pages` branch
+
 To add a new post, you currently need to make a new file in 
 
 `content/en/blog/_posts/`
@@ -20,6 +22,11 @@ date: 2021-04-26T11:37:04+01:00
 draft: false
 ---
 
+Your normal text here
+
+## Markdown format, etc
+
+```
 
 If you want to test deploy yourself, just clone the repo and run:
 
@@ -27,4 +34,6 @@ If you want to test deploy yourself, just clone the repo and run:
 hugo serve
 ```
 
-then go to the link in the output
+then go to the link in the output.
+
+These instructions are going to be moved to a contrib page, the README will be user-facing stuff.
