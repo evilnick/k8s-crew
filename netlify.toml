@@ -28,3 +28,9 @@ HUGO_VERSION = "0.83.1"
 
 [context.next.environment]
 HUGO_ENABLEGITINFO = "true"
+
+[[redirects]]
+  from = "https://evilnick.github.io/k8s-crew/*"
+  to = "https://vigorous-euler-k8s.netlify.app/:splat"
+  status = 301
+  force = true
