@@ -1,4 +1,4 @@
-baseURL = "https://example.com"
+baseURL = "https://evilnick.github.io/k8s-crew/"
 title = "Everything Kube"
 
 # Hugo allows theme composition (and inheritance). The precedence is from left to right.
