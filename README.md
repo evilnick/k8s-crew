@@ -1,5 +1,9 @@
 # k8s-crew
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2d606156-0849-4bb3-be5e-0b7b08f88fc8/deploy-status)](https://app.netlify.com/sites/vigorous-euler-k8s/deploys)
+
+![GitHub Pages](https://github.com/evilnick/k8s-crew/actions/workflows/gh-pages.yml/badge.svg)
+
 
 This is the temporary blog site. There are things still to be done, but it works and is currently deployed
 using netlify:  <https://vigorous-euler-k8s.netlify.app/>
