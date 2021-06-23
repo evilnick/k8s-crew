@@ -10,4 +10,4 @@ Allow: /docs/reference/kubernetes-api/api-index/
 Allow: /docs/reference/kubernetes-api/labels-annotations-taints/
 Disallow: /docs/reference/kubernetes-api/
 
-SITEMAP: https://example.com/sitemap.xml
+SITEMAP: https://evilnick.github.io/k8s-crew/sitemap.xml
