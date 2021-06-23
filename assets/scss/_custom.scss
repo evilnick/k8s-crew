@@ -104,7 +104,13 @@ body.td-404 main .error-details {
     height: 55px;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url("k8s-crew/images/favicon.png");
+    background-image: url("
+    
+    
+    
+    
+    
+    favicon.png");
   }
 
   #hamburger {
@@ -115,7 +121,7 @@ body.td-404 main .error-details {
 
   @media only screen and (min-width: 768px) {
     .navbar-brand {
-      background-image: url("k8s-crew/images/k8s-crew3.svg");
+      background-image: url("k8s-crew3.svg");
       top: 1.5rem;
       width: 280px;
       margin-left: 1rem;
@@ -204,7 +210,7 @@ body.td-404 main .error-details {
 
   @media only screen and (min-width: 768px) {
     .navbar-brand {
-      background-image: url("k8s-crew/images/k8s-crew2.svg");
+      background-image: url("k8s-crew2.svg");
     }
   }
 }
@@ -212,7 +218,7 @@ body.td-404 main .error-details {
 /* FOOTER */
 footer {
   background-color: #303030;
-  background-image: url("k8s-crew/images/texture.png");
+  background-image: url("texture.png");
   padding: 1rem !important;
   min-height: initial !important;
 
