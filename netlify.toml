@@ -34,3 +34,8 @@ HUGO_ENABLEGITINFO = "true"
   to = "https://vigorous-euler-k8s.netlify.app/:splat"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/k8s-crew/*"
+  to = "/:splat"
+  status = 200
