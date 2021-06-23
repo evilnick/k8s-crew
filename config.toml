@@ -141,7 +141,7 @@ version = "v1.21"
 githubbranch = "default"
 docsbranch = "default"
 deprecated = false
-currentUrl = "https://example.com"
+currentUrl = "https://evilnick.github.io/k8s-crew/"
 nextUrl = "https://"
 
 # See codenew shortcode
