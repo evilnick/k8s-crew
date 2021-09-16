@@ -6,8 +6,6 @@ slug: microk8s-s390x
 draft: false
 ---
 
-# MicroK8s on S390x!
-
 [s390x or IBM Z](https://en.wikipedia.org/wiki/Linux_on_IBM_Z) is one of those exotic (at least to me) architectures brought to us by the genius people over at IBM.
 
 ![IBM-Z-Ubuntu](/images/blog/microk8s-s390x/IBM-Z-Ubuntu.png)
