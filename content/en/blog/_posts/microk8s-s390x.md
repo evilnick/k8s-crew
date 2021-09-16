@@ -10,7 +10,7 @@ draft: false
 
 [s390x or IBM Z](https://en.wikipedia.org/wiki/Linux_on_IBM_Z) is one of those exotic (at least to me) architectures brought to us by the genius people over at IBM.
 
-![Feast your eye to those gorgeous IBM mainframes you will never get to own in your home lab :)]("\images\blog\microk8s-s390x\IBM-Z-Ubuntu.png")
+![Feast your eye to those gorgeous IBM mainframes you will never get to own in your home lab :)](/images/blog/microk8s-s390x/IBM-Z-Ubuntu.png)
 
 IBM Z mainframes are those monster machines that are not for you. Don’t feel bad, they even exceed the needs of small companies. So you might ask “what does MicroK8s have to do with such not-so-micro machines”? Well, MicroK8s is growing production grade features, s390x is one of them. Also, it is dead simple to support a new architecture on a snap! Let’s see how.
 
