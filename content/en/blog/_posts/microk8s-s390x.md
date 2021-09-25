@@ -35,7 +35,9 @@ Do not waste any more time. Put your software in a snap and sail to the “Great
 
 *Enjoy*
 
-
+---
+Konstaninos Tsakalozos
+Staff engineer at Canonical Ltd
 
 ### Links
 
