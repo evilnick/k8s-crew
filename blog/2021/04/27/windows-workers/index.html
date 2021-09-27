@@ -1,34 +1,253 @@
-<!doctype html><html lang=en class=no-js><head><script async src="https://www.googletagmanager.com/gtag/js?id=UA-36037335-10"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-36037335-10')</script><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=generator content="Hugo 0.84.0"><meta name=ROBOTS content="NOINDEX, NOFOLLOW"><link rel="shortcut icon" type=image/png href=/k8s-crew/images/favicon.png><link rel=apple-touch-icon href=/k8s-crew/favicons/apple-touch-icon-180x180.png sizes=180x180><link rel=manifest href=/k8s-crew/manifest.webmanifest><link rel=apple-touch-icon href=/k8s-crew/images/kubernetes-192x192.png><title>Windows workers with MicroK8s | Kubernetes</title><meta property="og:title" content="Windows workers with MicroK8s"><meta property="og:description" content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also."><meta property="og:type" content="article"><meta property="og:url" content="https://evilnick.github.io/k8s-crew/blog/2021/04/27/windows-workers/"><meta property="article:section" content="blog"><meta property="article:published_time" content="2021-04-27T12:37:04+01:00"><meta property="article:modified_time" content="2021-05-27T14:04:42+01:00"><meta property="og:site_name" content="Kubernetes"><meta itemprop=name content="Windows workers with MicroK8s"><meta itemprop=description content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also."><meta itemprop=datePublished content="2021-04-27T12:37:04+01:00"><meta itemprop=dateModified content="2021-05-27T14:04:42+01:00"><meta itemprop=wordCount content="817"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="Windows workers with MicroK8s"><meta name=twitter:description content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also."><link rel=preload href=/k8s-crew/scss/main.min.4e555f843e981a08e22741e0465b42551a49ebe8e4aa118489dd1b5a45a7712f.css as=style><link href=/k8s-crew/scss/main.min.4e555f843e981a08e22741e0465b42551a49ebe8e4aa118489dd1b5a45a7712f.css rel=stylesheet integrity><script src=/k8s-crew/js/jquery-3.3.1.min.js integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin=anonymous></script><script type=application/ld+json>{"@context":"https://schema.org","@type":"Organization","url":"https://kubernetes.io","logo":"https://kubernetes.io/images/favicon.png","potentialAction":{"@type":"SearchAction","target":"https://evilnick.github.io/k8s-crew/search/?q={search_term_string}","query-input":"required name=search_term_string"}}</script><meta name=theme-color content="#326ce5"><link rel=stylesheet href=/k8s-crew/css/feature-states.css><meta name=description content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also."><meta property="og:description" content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also."><meta name=twitter:description content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also."><meta property="og:url" content="https://evilnick.github.io/k8s-crew/blog/2021/04/27/windows-workers/"><meta property="og:title" content="Windows workers with MicroK8s"><meta name=twitter:title content="Windows workers with MicroK8s"><meta name=twitter:image content="https://kubernetes.io/images/favicon.png"><meta name=twitter:image:alt content="Kubernetes"><meta property="og:image" content="image_0.png"><meta property="og:type" content="article"><script src=/k8s-crew/js/script.js></script><title>Windows workers with MicroK8s | Kubernetes</title><script defer src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script></head><body class="td-page td-blog"><header><nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-row td-navbar" data-auto-burger=primary><a class=navbar-brand href=/k8s-crew/></a><div class="td-navbar-nav-scroll ml-md-auto" id=main_navbar><ul class="navbar-nav mt-2 mt-lg-0"><li class="nav-item mr-2 mb-lg-0"><a class="nav-link active" href=/k8s-crew/blog/>Team Blog</span></a></li></ul></div><button id=hamburger onclick=kub.toggleMenu() data-auto-burger-exclude><div></div></button></nav><section class="header-hero text-center text-white font-bold pb-4"><h1>Team Blog</h1></section></header><div class="container-fluid td-outer"><div class=td-main><div class="row flex-xl-nowrap"><div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none"><div id=td-sidebar-menu class=td-sidebar__inner><form class="td-sidebar__search d-flex align-items-center"><button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type=button data-toggle=collapse data-target=#td-section-nav aria-controls=td-docs-nav aria-expanded=false aria-label="Toggle section navigation"></button></form><nav class="collapse td-sidebar-nav pt-2 pl-4" id=td-section-nav><ul class="td-sidebar-nav__section pr-md-3"><li class=td-sidebar-nav__section-title><a href=/k8s-crew/blog/2021/04/27/windows-workers/ class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">2021</a></li><ul><li class="blog-post collapse show" data-year=2021><a class="td-sidebar-link td-sidebar-link__page active" id=m-k8s-crew-blog-2021-04-27-windows-workers href=/k8s-crew/blog/2021/04/27/windows-workers/>Windows workers with MicroK8s</a></li><li class="more-posts collapse show" data-year=2021><a class=td-sidebar-link id=more-posts href>Show More Posts...</a></li></ul></ul></nav></div><script>let morePosts=document.querySelectorAll(".more-posts"),year="";morePosts.forEach(a=>{a.onclick=c=>{c.preventDefault(),year=a.dataset.year,console.log(year);let b=document.querySelectorAll(`.blog-post.hidden[data-year="${year}"]`);console.log(b),b.forEach(a=>{a.classList.add('show'),a.classList.remove("hidden")}),a.style.display="none"}})</script></div><main class="col-12 col-md-9 col-xl-8 pl-md-5 pr-md-4" role=main><div class=td-content><h1>Windows workers with MicroK8s</h1><div class="td-byline mb-4"><time datetime=2021-04-27 class=text-muted>Tuesday, April 27, 2021</time></div><h1 id=windows-containers-on-kubernetes-with-microk8s>Windows containers on Kubernetes with MicroK8s</h1><p>Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success
+<!doctype html><html lang=en class=no-js>
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-36037335-10"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','UA-36037335-10')</script>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<meta name=generator content="Hugo 0.88.1">
+<meta name=ROBOTS content="NOINDEX, NOFOLLOW">
+<link rel="shortcut icon" type=image/png href=/k8s-crew/images/favicon.png>
+<link rel=apple-touch-icon href=/k8s-crew/favicons/apple-touch-icon-180x180.png sizes=180x180>
+<link rel=manifest href=/k8s-crew/manifest.webmanifest>
+<link rel=apple-touch-icon href=/k8s-crew/images/kubernetes-192x192.png>
+<title>Windows workers with MicroK8s | Kubernetes</title><meta property="og:title" content="Windows workers with MicroK8s">
+<meta property="og:description" content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://evilnick.github.io/k8s-crew/blog/2021/04/27/windows-workers/"><meta property="article:section" content="blog">
+<meta property="article:published_time" content="2021-04-27T12:37:04+01:00">
+<meta property="article:modified_time" content="2021-05-27T14:04:42+01:00"><meta property="og:site_name" content="Kubernetes">
+<meta itemprop=name content="Windows workers with MicroK8s">
+<meta itemprop=description content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also."><meta itemprop=datePublished content="2021-04-27T12:37:04+01:00">
+<meta itemprop=dateModified content="2021-05-27T14:04:42+01:00">
+<meta itemprop=wordCount content="817">
+<meta itemprop=keywords content><meta name=twitter:card content="summary">
+<meta name=twitter:title content="Windows workers with MicroK8s">
+<meta name=twitter:description content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also.">
+<link rel=preload href=/k8s-crew/scss/main.min.4e555f843e981a08e22741e0465b42551a49ebe8e4aa118489dd1b5a45a7712f.css as=style>
+<link href=/k8s-crew/scss/main.min.4e555f843e981a08e22741e0465b42551a49ebe8e4aa118489dd1b5a45a7712f.css rel=stylesheet integrity>
+<script src=/k8s-crew/js/jquery-3.3.1.min.js integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin=anonymous></script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Organization","url":"https://kubernetes.io","logo":"https://kubernetes.io/images/favicon.png","potentialAction":{"@type":"SearchAction","target":"https://evilnick.github.io/k8s-crew/search/?q={search_term_string}","query-input":"required name=search_term_string"}}</script>
+<meta name=theme-color content="#326ce5">
+<link rel=stylesheet href=/k8s-crew/css/feature-states.css>
+<meta name=description content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also.">
+<meta property="og:description" content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also.">
+<meta name=twitter:description content="Windows containers on Kubernetes with MicroK8s Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success of the container-based development model, it provides the tools to operate containers reliably at scale. The container-based development methodology is popular outside just the realm of open source and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management, faster development cycles, portability and consistent operation - apply to applications targeting the Windows OS also.">
+<meta property="og:url" content="https://evilnick.github.io/k8s-crew/blog/2021/04/27/windows-workers/">
+<meta property="og:title" content="Windows workers with MicroK8s">
+<meta name=twitter:title content="Windows workers with MicroK8s">
+<meta name=twitter:image content="https://kubernetes.io/images/favicon.png">
+<meta name=twitter:image:alt content="Kubernetes">
+<meta property="og:image" content="image_0.png">
+<meta property="og:type" content="article">
+<script src=/k8s-crew/js/script.js></script>
+<title>Windows workers with MicroK8s | Kubernetes</title>
+<script defer src=https://use.fontawesome.com/releases/v5.0.6/js/all.js></script>
+</head>
+<body class="td-page td-blog">
+<header>
+<nav class="js-navbar-scroll navbar navbar-expand navbar-dark flex-row td-navbar" data-auto-burger=primary>
+<a class=navbar-brand href=/k8s-crew/></a>
+<div class="td-navbar-nav-scroll ml-md-auto" id=main_navbar>
+<ul class="navbar-nav mt-2 mt-lg-0">
+<li class="nav-item mr-2 mb-lg-0">
+<a class="nav-link active" href=/k8s-crew/blog/>Team Blog</span></a>
+</li>
+</ul>
+</div>
+<button id=hamburger onclick=kub.toggleMenu() data-auto-burger-exclude><div></div></button>
+</nav>
+<section class="header-hero text-center text-white font-bold pb-4">
+<h1>
+Team Blog
+</h1>
+</section>
+</header>
+<div class="container-fluid td-outer">
+<div class=td-main>
+<div class="row flex-xl-nowrap">
+<div class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none">
+<div id=td-sidebar-menu class=td-sidebar__inner>
+<form class="td-sidebar__search d-flex align-items-center">
+<button class="btn btn-link td-sidebar__toggle d-md-none p-0 ml-3 fas fa-bars" type=button data-toggle=collapse data-target=#td-section-nav aria-controls=td-docs-nav aria-expanded=false aria-label="Toggle section navigation">
+</button>
+</form>
+<nav class="collapse td-sidebar-nav pt-2 pl-4" id=td-section-nav>
+<ul class="td-sidebar-nav__section pr-md-3">
+<li class=td-sidebar-nav__section-title>
+<a href=/k8s-crew/blog/2021/09/16/microk8s-s390x/ class="align-left pl-0 pr-2 active td-sidebar-link td-sidebar-link__section">
+2021
+</a>
+</li>
+<ul>
+<li class="blog-post collapse show" data-year=2021>
+<a class="td-sidebar-link td-sidebar-link__page" id=m-k8s-crew-blog-2021-09-16-microk8s-s390x href=/k8s-crew/blog/2021/09/16/microk8s-s390x/>
+MicroK8s on S390x
+</a>
+</li>
+<li class="blog-post collapse show" data-year=2021>
+<a class="td-sidebar-link td-sidebar-link__page active" id=m-k8s-crew-blog-2021-04-27-windows-workers href=/k8s-crew/blog/2021/04/27/windows-workers/>
+Windows workers with MicroK8s
+</a>
+</li>
+<li class="more-posts collapse show" data-year=2021>
+<a class=td-sidebar-link id=more-posts href>Show More Posts...</a>
+</li>
+</ul>
+</ul>
+</nav>
+</div>
+<script>let morePosts=document.querySelectorAll(".more-posts"),year="";morePosts.forEach(a=>{a.onclick=c=>{c.preventDefault(),year=a.dataset.year,console.log(year);let b=document.querySelectorAll(`.blog-post.hidden[data-year="${year}"]`);console.log(b),b.forEach(a=>{a.classList.add('show'),a.classList.remove("hidden")}),a.style.display="none"}})</script>
+</div>
+<main class="col-12 col-md-9 col-xl-8 pl-md-5 pr-md-4" role=main>
+<div class=td-content>
+<h1>Windows workers with MicroK8s</h1>
+<div class="td-byline mb-4">
+<time datetime=2021-04-27 class=text-muted>Tuesday, April 27, 2021</time>
+</div>
+<h1 id=windows-containers-on-kubernetes-with-microk8s>Windows containers on Kubernetes with MicroK8s</h1>
+<p>Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success
 of the container-based development model, it provides the tools to operate containers reliably at
 scale. The container-based development methodology is popular outside just the realm of open source
 and Linux though. Exactly the same benefits of containers - low resource overhead, dependency management,
 faster development cycles, portability and consistent operation - apply to applications targeting the
-Windows OS also.</p><h3 id=kubernetes-on-windows>Kubernetes on Windows</h3><p>There are no plans to develop code for a Windows only Kubernetes cluster. The control plane and
+Windows OS also.</p>
+<h3 id=kubernetes-on-windows>Kubernetes on Windows</h3>
+<p>There are no plans to develop code for a Windows only Kubernetes cluster. The control plane and
 master components (kube-apiserver, kube-scheduler, kube-controller) will, for the foreseeable future,
-only run on a Linux OS. However, it is possible to run the services required for a Kubernetes node on Windows.</p><p>This means that a worker node can be used to run Windows workloads, while the control plane runs
+only run on a Linux OS. However, it is possible to run the services required for a Kubernetes node on Windows.</p>
+<p>This means that a worker node can be used to run Windows workloads, while the control plane runs
 on Linux - a hybrid cluster. Production-level support for running a Windows node was introduced
-with <a href=https://kubernetes.io/blog/2019/03/25/kubernetes-1-14-release-announcement/>version 1.14 of Kubernetes back in March 2019</a>, so in terms of deployment of Windows containers, operators can expect exactly the same features for Windows workloads as they do for Linux ones.</p><p>The Kubernetes components that are required for a worker node are:</p><ul><li><p>kubelet: this is the Kubernetes agent which manages and reports on the running containers in a pod.</p></li><li><p>kube-proxy: a network proxy component which maintains the network rules and allows pods to
-communicate within or externally to the rest of the cluster</p></li><li><p>a container runtime: the executable responsible for running individual containers. Actually, several
+with <a href=https://kubernetes.io/blog/2019/03/25/kubernetes-1-14-release-announcement/>version 1.14 of Kubernetes back in March 2019</a>, so in terms of deployment of Windows containers, operators can expect exactly the same features for Windows workloads as they do for Linux ones.</p>
+<p>The Kubernetes components that are required for a worker node are:</p>
+<ul>
+<li>
+<p>kubelet: this is the Kubernetes agent which manages and reports on the running containers in a pod.</p>
+</li>
+<li>
+<p>kube-proxy: a network proxy component which maintains the network rules and allows pods to
+communicate within or externally to the rest of the cluster</p>
+</li>
+<li>
+<p>a container runtime: the executable responsible for running individual containers. Actually, several
 different container runtimes are now supported by Kubernetes - Docker, CRI-O, containerd (and through
 that, many others such as the Windows-specific runhcs), as well as any other which support the
-Kubernetes <a href=https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md>container runtime interface (CRI)</a></p></li></ul><p><img src=image_0.png alt="image alt text"></p><p>Kubernetes cluster components (image CC BY 4.0 The Kubernetes Authors).</p><p>It is of course possible to manually install these components on a Windows machine and construct a node,
-then integrate it into an existing cluster. There are easier ways to achieve this though.</p><h3 id=microk8s-and-calico>MicroK8s and Calico</h3><p>For the Linux-based part of a hybrid Kubernetes cluster, MicroK8s is a compelling choice.
+Kubernetes <a href=https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md>container runtime interface (CRI) </a></p>
+</li>
+</ul>
+<p><img src=image_0.png alt="image alt text"></p>
+<p>Kubernetes cluster components (image CC BY 4.0 The Kubernetes Authors).</p>
+<p>It is of course possible to manually install these components on a Windows machine and construct a node,
+then integrate it into an existing cluster. There are easier ways to achieve this though.</p>
+<h3 id=microk8s-and-calico>MicroK8s and Calico</h3>
+<p>For the Linux-based part of a hybrid Kubernetes cluster, MicroK8s is a compelling choice.
 MicroK8s is a minimal implementation of Kubernetes which can run on the average laptop, yet has production
 grade features. It's great for offline development, prototyping and testing, and if required you can also
-get professional support for it through <a href=https://ubuntu.com/support>Ubuntu Advantage</a>.</p><p>The most compelling feature of MicroK8s for this use case is that you can run it sort-of-almost-natively
+get professional support for it through <a href=https://ubuntu.com/support>Ubuntu Advantage</a>.</p>
+<p>The most compelling feature of MicroK8s for this use case is that you can run it sort-of-almost-natively
 on Windows 10! For development work and even production use-cases, this is hugely useful - your hybrid
 cluster can reside on one physical Windows machine. MicroK8s on Windows works by making use of
 <a href=https://multipass.run/>Multipass</a> - a neat way of running a virtual Ubuntu machine on Windows.
 The MicroK8s installer for Windows doesn't require any knowledge of multi-pass or even virtual machines
-though, it sets everything up with just a few options from the installer.</p><p>To fetch the current installer and see the (simple!) install instructions for MicroK8s on Windows, check out the <a href=https://microk8s.io/>MicroK8s website</a>.</p><p>Whether using MicroK8 on Windows or a separate Linux machine, the next thing to consider is networking. Calico has been the default CNI(Container Network Interface) for MicroK8s since the 1.19 release. The CNI handles a number of networking requirements:</p><ul><li><p>Container-to-container communications</p></li><li><p>Pod-to-Pod communications</p></li><li><p>Pod-to-Service communications</p></li><li><p>External-to-Service communications</p></li></ul><p>The popularity of Calico has been building for some time over simpler CNIs, as it supports
+though, it sets everything up with just a few options from the installer.</p>
+<p>To fetch the current installer and see the (simple!) install instructions for MicroK8s on Windows, check out the <a href=https://microk8s.io/>MicroK8s website</a>.</p>
+<p>Whether using MicroK8 on Windows or a separate Linux machine, the next thing to consider is networking. Calico has been the default CNI(Container Network Interface) for MicroK8s since the 1.19 release. The CNI handles a number of networking requirements:</p>
+<ul>
+<li>
+<p>Container-to-container communications</p>
+</li>
+<li>
+<p>Pod-to-Pod communications</p>
+</li>
+<li>
+<p>Pod-to-Service communications</p>
+</li>
+<li>
+<p>External-to-Service communications</p>
+</li>
+</ul>
+<p>The popularity of Calico has been building for some time over simpler CNIs, as it supports
 more useful features (e.g. Border Gateway Protocol [#ref]) and is also available in a
-<a href=https://www.tigera.io/tigera-products/calico-enterprise/>supported enterprise version</a>.</p><p>Usefully, Calico already bundles the Windows executables for this CNI in an installer script that also fetches the other components required for a Windows node, making installation and setup that much easier. The Calico website has <a href=https://docs.projectcalico.org/getting-started/windows-calico/quickstart>complete instructions for this</a>. This contains not only links to the installer script but also a detailed rationale on how the setup works. If you are just interested in getting started with adding a Windows worker with MicroK8s there are more concise and specific instructions in the <a href=https://microk8s.io/docs/add-a-windows-worker-node-to-microk8s>MicroK8s documentation</a>.</p><h3 id=scheduling-windows-containers-on-hybrid-kubernetes>Scheduling Windows containers on hybrid Kubernetes</h3><p>The final step of this journey is to actually deploy some Windows containers. With a
+<a href=https://www.tigera.io/tigera-products/calico-enterprise/>supported enterprise version</a>.</p>
+<p>Usefully, Calico already bundles the Windows executables for this CNI in an installer script that also fetches the other components required for a Windows node, making installation and setup that much easier. The Calico website has <a href=https://docs.projectcalico.org/getting-started/windows-calico/quickstart>complete instructions for this</a>. This contains not only links to the installer script but also a detailed rationale on how the setup works. If you are just interested in getting started with adding a Windows worker with MicroK8s there are more concise and specific instructions in the <a href=https://microk8s.io/docs/add-a-windows-worker-node-to-microk8s>MicroK8s documentation</a>.</p>
+<h3 id=scheduling-windows-containers-on-hybrid-kubernetes>Scheduling Windows containers on hybrid Kubernetes</h3>
+<p>The final step of this journey is to actually deploy some Windows containers. With a
 hybrid cluster, you could potentially be running Windows or Linux based containers and
-Kubernetes will need some way of knowing which nodes to deploy them on.</p><p>A pod specification for a Windows workload should contain a nodeselector field
+Kubernetes will need some way of knowing which nodes to deploy them on.</p>
+<p>A pod specification for a Windows workload should contain a nodeselector field
 identifying that it is to run on Windows. The recommended additional workflow is to use
 the 'taints and tolerations' features of Kubernetes, to explicitly refuse deployments
 on the Windows nodes to any pod which hasn't specifically requested them. There is a
 full explanation of this workflow in the upstream
-<a href=https://kubernetes.io/docs/setup/production-environment/windows/user-guide-windows-containers/#taints-and-tolerations>Kubernetes documentation</a>.</p><p>More from MicroK8s</p><p>There is plenty more you can do with a MicroK8s cluster - be sure to check out the
+<a href=https://kubernetes.io/docs/setup/production-environment/windows/user-guide-windows-containers/#taints-and-tolerations>Kubernetes documentation</a>.</p>
+<p>More from MicroK8s</p>
+<p>There is plenty more you can do with a MicroK8s cluster - be sure to check out the
 documentation for <a href=https://microk8s.io/docs/addons>MicroK8s add-ons</a> so you can
-enable the dashboard, ingress controllers, Kubeflow and more.</p><ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5"><li><a class="btn btn-primary disabled"><span class=mr-1>←</span> Previous</a></li><a class="btn btn-primary disabled">Next <span class=ml-1>→</span></a></li></ul></div></main><div class="d-none d-xl-block col-xl-2 td-toc d-print-none"><div class="td-page-blog-meta ml-2 pb-1 pt-2 mb-4"><link rel=alternate type=application/rss+xml href=https://evilnick.github.io/k8s-crew/feed.xml title=Kubernetes><a class=widget-link href=https://evilnick.github.io/k8s-crew/feed.xml><div><i class="fas fa-rss fab-icon"></i><span class=widget-link-text>RSS Feed</span></div></a><a class=widget-link href=https://twitter.com/ubuntu><div><i class="fab fa-twitter-square fab-icon"></i><span class=widget-link-text>@ubuntu</span></div></a><a class=widget-link href=https://microk8s.io/docs><div><i class="fas fa-book"></i> <span class=widget-link-text>MicroK8s</span></div></a><a class=widget-link href=https://charmed-kubeflow.io/docs><div><i class="fas fa-book"></i> <span class=widget-link-text>Charmed Kubeflow</span></div></a><a class=widget-link href=https://ubuntu.com/kubernetes/docs><div><i class="fas fa-book"></i> <span class=widget-link-text>Charmed Kubernetes</span></div></a><a class=widget-link href=https://github.com/charmed-kubernetes/bundle><div><i class="fab fa-github-square fab-icon"></i> <span class=widget-link-text>Charmed Kubernetes on GitHub</span></div></a><a class=widget-link href=https://discuss.kubernetes.io/c/general-discussions/microk8s/><div><i class="fab fa-discourse fab-icon"></i><span class=widget-link-text> MicroK8s forum</span></div></a></div></div></div></div><footer class=d-print-none><div class=container-fluid><div class=row><div class="col-6 col-sm-2 text-xs-center order-sm-2"><ul class="list-inline mb-0"><li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=Twitter aria-label=Twitter><a class=text-white target=_blank href=https://twitter.com/ubuntu><i class="fab fa-twitter"></i></a></li><li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=Youtube aria-label=Youtube><a class=text-white target=_blank href=https://youtube.com/kubernetescommunity><i class="fab fa-youtube"></i></a></li></ul></div><div class="col-6 col-sm-2 text-right text-xs-center order-sm-3"><ul class="list-inline mb-0"><li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=GitHub aria-label=GitHub><a class=text-white target=_blank href=https://github.com/charmed-kubernetes/bundle><i class="fab fa-github"></i></a></li><li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=Slack aria-label=Slack><a class=text-white target=_blank href=https://slack.k8s.io><i class="fab fa-slack"></i></a></li></ul></div><div class="col-12 col-sm-8 text-center order-sm-2"><small class=text-white>&copy; 2021 Canonical Ltd. | Documentation Distributed under <a href=https://creativecommons.org/licenses/by/4.0/legalcode class=light-text>CC BY 4.0</a></small><br><br></div></div></div></footer></div><script src=https://evilnick.github.io/k8s-crew/js/popper-1.14.3.min.js integrity=sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49 crossorigin=anonymous></script><script src=https://evilnick.github.io/k8s-crew/js/bootstrap-4.3.1.min.js integrity=sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM crossorigin=anonymous></script><script src=/k8s-crew/js/main.min.0891fb2e995b7f9ae621eb8e502e2c9cee0dfc47dcd5540955c02c1ff73b7fc0.js integrity="sha256-CJH7Lplbf5rmIeuOUC4snO4N/Efc1VQJVcAsH/c7f8A=" crossorigin=anonymous></script></body></html>
+enable the dashboard, ingress controllers, Kubeflow and more.</p>
+<ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5">
+<li>
+<a class="btn btn-primary disabled"><span class=mr-1>←</span> Previous</a>
+</li>
+<a href=/k8s-crew/blog/2021/09/16/microk8s-s390x/ class="btn btn-primary">Next <span class=ml-1>→</span></a>
+</li>
+</ul>
+</div>
+</main>
+<div class="d-none d-xl-block col-xl-2 td-toc d-print-none">
+<div class="td-page-blog-meta ml-2 pb-1 pt-2 mb-4">
+<link rel=alternate type=application/rss+xml href=https://evilnick.github.io/k8s-crew/feed.xml title=Kubernetes>
+<a class=widget-link href=https://evilnick.github.io/k8s-crew/feed.xml><div> <i class="fas fa-rss fab-icon"> </i> <span class=widget-link-text>RSS Feed</span></div> </a>
+<a class=widget-link href=https://twitter.com/ubuntu><div> <i class="fab fa-twitter-square fab-icon"> </i> <span class=widget-link-text> @ubuntu</span></div></a>
+<a class=widget-link href=https://microk8s.io/docs><div> <i class="fas fa-book"></i> <span class=widget-link-text> MicroK8s</span></div></a>
+<a class=widget-link href=https://charmed-kubeflow.io/docs><div> <i class="fas fa-book"></i> <span class=widget-link-text> Charmed Kubeflow</span></div></a>
+<a class=widget-link href=https://ubuntu.com/kubernetes/docs><div> <i class="fas fa-book"></i> <span class=widget-link-text> Charmed Kubernetes</span></div></a>
+<a class=widget-link href=https://github.com/charmed-kubernetes/bundle><div> <i class="fab fa-github-square fab-icon"></i> <span class=widget-link-text> Charmed Kubernetes on GitHub </span></div></a>
+<a class=widget-link href=https://discuss.kubernetes.io/c/general-discussions/microk8s/><div> <i class="fab fa-discourse fab-icon"></i><span class=widget-link-text> MicroK8s forum </span></div></a>
+</div>
+</div>
+</div>
+</div>
+<footer class=d-print-none>
+<div class=container-fluid>
+<div class=row>
+<div class="col-6 col-sm-2 text-xs-center order-sm-2">
+<ul class="list-inline mb-0">
+<li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=Twitter aria-label=Twitter>
+<a class=text-white target=_blank href=https://twitter.com/ubuntu>
+<i class="fab fa-twitter"></i>
+</a>
+</li>
+<li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=Youtube aria-label=Youtube>
+<a class=text-white target=_blank href=https://youtube.com/kubernetescommunity>
+<i class="fab fa-youtube"></i>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-6 col-sm-2 text-right text-xs-center order-sm-3">
+<ul class="list-inline mb-0">
+<li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=GitHub aria-label=GitHub>
+<a class=text-white target=_blank href=https://github.com/charmed-kubernetes/bundle>
+<i class="fab fa-github"></i>
+</a>
+</li>
+<li class="list-inline-item mx-2 h3" data-toggle=tooltip data-placement=top title=Slack aria-label=Slack>
+<a class=text-white target=_blank href=https://slack.k8s.io>
+<i class="fab fa-slack"></i>
+</a>
+</li>
+</ul>
+</div>
+<div class="col-12 col-sm-8 text-center order-sm-2">
+<small class=text-white>&copy; 2021 Canonical Ltd. | Documentation Distributed under <a href=https://creativecommons.org/licenses/by/4.0/legalcode class=light-text>CC BY 4.0</a></small>
+<br>
+<br>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<script src=https://evilnick.github.io/k8s-crew/js/popper-1.14.3.min.js integrity=sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49 crossorigin=anonymous></script>
+<script src=https://evilnick.github.io/k8s-crew/js/bootstrap-4.3.1.min.js integrity=sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM crossorigin=anonymous></script>
+<script src=/k8s-crew/js/main.min.0891fb2e995b7f9ae621eb8e502e2c9cee0dfc47dcd5540955c02c1ff73b7fc0.js integrity="sha256-CJH7Lplbf5rmIeuOUC4snO4N/Efc1VQJVcAsH/c7f8A=" crossorigin=anonymous></script>
+</body>
+</html>

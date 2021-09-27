@@ -1,4 +1,33 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes – Everything Kube</title><link>https://evilnick.github.io/k8s-crew/</link><description>The Kubernetes project blog</description><generator>Hugo -- gohugo.io</generator><image><url>https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png</url><title>Kubernetes.io</title><link>https://evilnick.github.io/k8s-crew/</link></image><atom:link href="https://evilnick.github.io/k8s-crew/feed.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Windows workers with MicroK8s</title><link>https://evilnick.github.io/k8s-crew/blog/2021/04/27/windows-workers/</link><pubDate>Tue, 27 Apr 2021 12:37:04 +0100</pubDate><guid>https://evilnick.github.io/k8s-crew/blog/2021/04/27/windows-workers/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes – Everything Kube</title><link>https://evilnick.github.io/k8s-crew/</link><description>The Kubernetes project blog</description><generator>Hugo -- gohugo.io</generator><image><url>https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png</url><title>Kubernetes.io</title><link>https://evilnick.github.io/k8s-crew/</link></image><atom:link href="https://evilnick.github.io/k8s-crew/feed.xml" rel="self" type="application/rss+xml"/><item><title>Blog: MicroK8s on S390x</title><link>https://evilnick.github.io/k8s-crew/blog/2021/09/16/microk8s-s390x/</link><pubDate>Thu, 16 Sep 2021 12:37:04 +0100</pubDate><guid>https://evilnick.github.io/k8s-crew/blog/2021/09/16/microk8s-s390x/</guid><description>
+&lt;p>&lt;a href="https://en.wikipedia.org/wiki/Linux_on_IBM_Z">s390x or IBM Z&lt;/a> is one of those exotic (at least to me) architectures brought to us by the genius people over at IBM.&lt;/p>
+&lt;p>&lt;img src="https://evilnick.github.io/k8s-crew/images/blog/microk8s-s390x/IBM-Z-Ubuntu.png" alt="IBM-Z-Ubuntu">&lt;/p>
+&lt;ul>
+&lt;li>Feast your eye to those gorgeous IBM mainframes you will never get to own in your home lab :) *&lt;/li>
+&lt;/ul>
+&lt;p>IBM Z mainframes are those monster machines that are not for you. Don’t feel bad, they even exceed the needs of small companies. So you might ask “what does MicroK8s have to do with such not-so-micro machines”? Well, MicroK8s is growing production grade features, s390x is one of them. Also, it is dead simple to support a new architecture on a snap! Let’s see how.&lt;/p>
+&lt;h3 id="why-s390x-was-easy-to-support">Why s390x was easy to support?&lt;/h3>
+&lt;p>MicroK8s &lt;a href="https://github.com/ubuntu/microk8s">code lives on github&lt;/a> (“like and subscribe” as a youtuber would say) and &lt;a href="https://launchpad.net/microk8s">is mirrored in launchpad&lt;/a>. That is where the magic happens! In launchpad you can ask launchpad builders to build your snap and push it to a channel/track. For MikroK8s we have one such builder for each &lt;a href="https://code.launchpad.net/~kos.tsakalozos/microk8s/+git/microk8s/+snaps">Kubernetes version from v1.22 all the way to v1.10&lt;/a>. Here is how the 1.22 snap builder is configured so it automatically assembles the MicroK8s snap parts and puts them in the 1.22/edge channel:&lt;/p>
+&lt;p>&lt;img src="https://evilnick.github.io/k8s-crew/images/blog/microk8s-s390x/1.22-builder.png" alt="builder-1.22">&lt;/p>
+&lt;ul>
+&lt;li>The microk8s-1.22 snap builder recipe. *&lt;/li>
+&lt;/ul>
+&lt;p>The most exciting part comes when you click the edit button on this snap builder:&lt;/p>
+&lt;p>&lt;img src="https://evilnick.github.io/k8s-crew/images/blog/microk8s-s390x/available-builders.png" alt="available-builders">&lt;/p>
+&lt;ul>
+&lt;li>All the architectures just one click away. *&lt;/li>
+&lt;/ul>
+&lt;p>Yes, you got it right. These are all the architectures you can build a snap for; just by ticking a checkbox! Your snap can support the usual, x86–64 and ARM but also IBM’s s390x, and PowerPC. I cannot wait to get my hands on a RISC-V build.&lt;/p>
+&lt;h3 id="weekend-project">Weekend project!&lt;/h3>
+&lt;p>Do not waste any more time. Put your software in a snap and sail to the “Great Sea of Opportunity”.&lt;/p>
+&lt;p>&lt;em>Enjoy&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>Konstaninos Tsakalozos&lt;/p>
+&lt;p>Staff engineer at Canonical Ltd&lt;/p>
+&lt;h3 id="links">Links&lt;/h3>
+&lt;ul>
+&lt;li>&lt;a href="https://github.com/ubuntu/microk8s">MicroK8s repo&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://en.wikipedia.org/wiki/Linux_on_IBM_Z">IBM Z&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Blog: Windows workers with MicroK8s</title><link>https://evilnick.github.io/k8s-crew/blog/2021/04/27/windows-workers/</link><pubDate>Tue, 27 Apr 2021 12:37:04 +0100</pubDate><guid>https://evilnick.github.io/k8s-crew/blog/2021/04/27/windows-workers/</guid><description>
 &lt;h1 id="windows-containers-on-kubernetes-with-microk8s">Windows containers on Kubernetes with MicroK8s&lt;/h1>
 &lt;p>Kubernetes orchestrates clusters of machines to run container-based workloads. Building on the success
 of the container-based development model, it provides the tools to operate containers reliably at
