@@ -69,6 +69,7 @@ This the multi-page printable view of this section.
 </div>
 <h1 class=title>Team Blog</h1>
 <ul>
+<li><a href=#pg-3bd9c3a025faf599697697164ff6a462>Harvest the power of FPGAs with MicroK8s</a></li>
 <li><a href=#pg-63a525d0809281397beb421228643391>MicroK8s on S390x</a></li>
 <li><a href=#pg-829a39e6b94078952ee2e58702fdd586>Windows workers with MicroK8s</a></li>
 </ul>
@@ -76,6 +77,31 @@ This the multi-page printable view of this section.
 </div>
 </div>
 <div class=td-content>
+<h1 id=pg-3bd9c3a025faf599697697164ff6a462>Harvest the power of FPGAs with MicroK8s</h1>
+<div class="td-byline mb-4">
+<time datetime=2021-09-29 class=text-muted>Wednesday, September 29, 2021</time>
+</div>
+<p><img src=/images/blog/microk8s-inaccel/microk8s-inaccel.png alt=MicroK8s-InAccel></p>
+<p><a href=https://en.wikipedia.org/wiki/Field-programmable_gate_array>FPGAs</a> have always been in my TODO list. It is always exciting to think that the code you are working on could be accelerated by running it in hardware. How naive…</p>
+<p>The truth is that running code on FPGAs is an art of its own. There is a fair amount of complexity. You need to invest time and effort to get all the tools aligned correctly and harvest the power of Field Programmable Gate Arrays. </p>
+<p>Thankfully the great people over at <a href=https://inaccel.com/>InAccel</a> are here to help us. With their well considered, streamlined tool set they lift much of the burden involved in integrating, storing and delivering hardware accelerated code.</p>
+<p>Naturally, InAccel and <a href=https://microk8s.io/>MicroK8s</a> make a great pair! We would like to welcome them to the MicroK8s ecosystem. Here is how to get a glimpse of how easy we made things for you:</p>
+<pre tabindex=0><code>sudo snap install microk8s --classic --channel=latest/edge
+sudo microk8s status --wait-ready
+sudo microk8s enable inaccel
+</code></pre><p>The inaccel add-on is currently available in the latest/edge channel and will be included MicroK8s next stable release, v1.23. Read more in <a href=https://microk8s.io/docs/addon-inaccel>our docs</a>.</p>
+<p><em>Have fun!</em></p>
+<hr>
+<p>Konstaninos Tsakalozos</p>
+<p>Staff engineer at Canonical Ltd</p>
+<h1 id=links>Links</h1>
+<ul>
+<li><a href=https://en.wikipedia.org/wiki/Field-programmable_gate_array>FPGAs</a></li>
+<li><a href=https://microk8s.io/>MicroK8s</a></li>
+<li><a href=https://github.com/ubuntu/microk8s>MicroK8s repo</a></li>
+</ul>
+</div>
+<div class=td-content style=page-break-before:always>
 <h1 id=pg-63a525d0809281397beb421228643391>MicroK8s on S390x</h1>
 <div class="td-byline mb-4">
 <time datetime=2021-09-16 class=text-muted>Thursday, September 16, 2021</time>

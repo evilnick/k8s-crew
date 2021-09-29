@@ -1,4 +1,23 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes – Everything Kube</title><link>https://evilnick.github.io/k8s-crew/</link><description>The Kubernetes project blog</description><generator>Hugo -- gohugo.io</generator><image><url>https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png</url><title>Kubernetes.io</title><link>https://evilnick.github.io/k8s-crew/</link></image><atom:link href="https://evilnick.github.io/k8s-crew/feed.xml" rel="self" type="application/rss+xml"/><item><title>Blog: MicroK8s on S390x</title><link>https://evilnick.github.io/k8s-crew/blog/2021/09/16/microk8s-s390x/</link><pubDate>Thu, 16 Sep 2021 12:37:04 +0100</pubDate><guid>https://evilnick.github.io/k8s-crew/blog/2021/09/16/microk8s-s390x/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes – Everything Kube</title><link>https://evilnick.github.io/k8s-crew/</link><description>The Kubernetes project blog</description><generator>Hugo -- gohugo.io</generator><image><url>https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.png</url><title>Kubernetes.io</title><link>https://evilnick.github.io/k8s-crew/</link></image><atom:link href="https://evilnick.github.io/k8s-crew/feed.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Harvest the power of FPGAs with MicroK8s</title><link>https://evilnick.github.io/k8s-crew/blog/2021/09/29/microk8s-inaccel/</link><pubDate>Wed, 29 Sep 2021 12:37:04 +0100</pubDate><guid>https://evilnick.github.io/k8s-crew/blog/2021/09/29/microk8s-inaccel/</guid><description>
+&lt;p>&lt;img src="https://evilnick.github.io/k8s-crew/images/blog/microk8s-inaccel/microk8s-inaccel.png" alt="MicroK8s-InAccel">&lt;/p>
+&lt;p>&lt;a href="https://en.wikipedia.org/wiki/Field-programmable_gate_array">FPGAs&lt;/a> have always been in my TODO list. It is always exciting to think that the code you are working on could be accelerated by running it in hardware. How naive…&lt;/p>
+&lt;p>The truth is that running code on FPGAs is an art of its own. There is a fair amount of complexity. You need to invest time and effort to get all the tools aligned correctly and harvest the power of Field Programmable Gate Arrays. &lt;/p>
+&lt;p>Thankfully the great people over at &lt;a href="https://inaccel.com/">InAccel&lt;/a> are here to help us. With their well considered, streamlined tool set they lift much of the burden involved in integrating, storing and delivering hardware accelerated code.&lt;/p>
+&lt;p>Naturally, InAccel and &lt;a href="https://microk8s.io/">MicroK8s&lt;/a> make a great pair! We would like to welcome them to the MicroK8s ecosystem. Here is how to get a glimpse of how easy we made things for you:&lt;/p>
+&lt;pre tabindex="0">&lt;code>sudo snap install microk8s --classic --channel=latest/edge
+sudo microk8s status --wait-ready
+sudo microk8s enable inaccel
+&lt;/code>&lt;/pre>&lt;p>The inaccel add-on is currently available in the latest/edge channel and will be included MicroK8s next stable release, v1.23. Read more in &lt;a href="https://microk8s.io/docs/addon-inaccel">our docs&lt;/a>.&lt;/p>
+&lt;p>&lt;em>Have fun!&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>Konstaninos Tsakalozos&lt;/p>
+&lt;p>Staff engineer at Canonical Ltd&lt;/p>
+&lt;h1 id="links">Links&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="https://en.wikipedia.org/wiki/Field-programmable_gate_array">FPGAs&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://microk8s.io/">MicroK8s&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://github.com/ubuntu/microk8s">MicroK8s repo&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Blog: MicroK8s on S390x</title><link>https://evilnick.github.io/k8s-crew/blog/2021/09/16/microk8s-s390x/</link><pubDate>Thu, 16 Sep 2021 12:37:04 +0100</pubDate><guid>https://evilnick.github.io/k8s-crew/blog/2021/09/16/microk8s-s390x/</guid><description>
 &lt;p>&lt;a href="https://en.wikipedia.org/wiki/Linux_on_IBM_Z">s390x or IBM Z&lt;/a> is one of those exotic (at least to me) architectures brought to us by the genius people over at IBM.&lt;/p>
 &lt;p>&lt;img src="https://evilnick.github.io/k8s-crew/images/blog/microk8s-s390x/IBM-Z-Ubuntu.png" alt="IBM-Z-Ubuntu">&lt;/p>
 &lt;ul>
